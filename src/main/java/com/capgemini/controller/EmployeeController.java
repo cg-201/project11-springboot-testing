@@ -1,5 +1,7 @@
 package com.capgemini.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
 		Employee e = iemployeeService.createEmployee(employee);
 		return new ResponseEntity<Employee>(e, HttpStatus.CREATED);
 	}
