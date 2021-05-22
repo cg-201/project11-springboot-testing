@@ -1,22 +1,23 @@
 package com.capgemini.exception;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
 	
-	@ExceptionHandler(value =  Exception.class)
+	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorDetails> handleException(Exception e) {
 		
 		ErrorDetails errorDetails = new ErrorDetails();
@@ -28,16 +29,21 @@ public class GlobalExceptionHandler {
 	}
 	
 	
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, String> handleValidationExceptions(
-	  MethodArgumentNotValidException ex) {
-	    Map<String, String> errors = new HashMap<>();
-	    ex.getBindingResult().getFieldErrors().forEach((error) -> {
-	        errors.put(error.getField(), error.getDefaultMessage());
-	    });
-	    
-	    
-	    return errors;
+	protected ResponseEntity<ErrorDetails> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+		List<String> errors = new ArrayList<String>();
+		for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+			errors.add(error.getField() + ": " + error.getDefaultMessage());
+		}
+		for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
+			errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
+		}
+
+		ErrorDetails ed = new ErrorDetails();
+		ed.setMesssage("Entity validation error!");
+		ed.setErrors(errors);
+		ed.setTimestamp(LocalDateTime.now());
+		
+		return new ResponseEntity<ErrorDetails>(ed, HttpStatus.BAD_REQUEST);
 	}
 }

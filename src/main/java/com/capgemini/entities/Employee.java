@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -23,4 +24,7 @@ public class Employee {
 	private String email;
 	private String password;
 	private String mobile;
+	
+	@Min(value = 18)
+	private int age;
 }
