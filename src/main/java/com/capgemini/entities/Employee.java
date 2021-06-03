@@ -16,15 +16,12 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@NotNull(message = "Name can't be null!")
-	private String name;
-	
-	@NotNull(message = "Email can't be null!")
+
+	private String firstName;
+	private String lastName;
+	private String userName;
 	private String email;
 	private String password;
 	private String mobile;
-	
-	@Min(value = 18)
 	private int age;
 }

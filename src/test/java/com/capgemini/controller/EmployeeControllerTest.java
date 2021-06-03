@@ -32,7 +32,7 @@ class EmployeeControllerTest {
 	void findEmployeeTest() throws Exception {
 		
 		Employee e = new Employee();
-		e.setName("rahul");
+		e.setUserName("rahul");
 		e.setEmail("rahul@gmail.com");
 		
 		// LEARNING 2
@@ -50,7 +50,7 @@ class EmployeeControllerTest {
 	void createEmployeeTest() throws Exception {
 		
 		Employee e = new Employee();
-		e.setName("rahul");
+		e.setUserName("rahul");
 		e.setEmail("rahul@gmail.com");
 		
 		// LEARNING 2
