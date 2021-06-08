@@ -40,6 +40,12 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(e, HttpStatus.OK);
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<Employee> verifyTheUser(@RequestBody Employee employee) {
+		Employee e = iemployeeService.verifyUser(employee.getUserName(), employee.getPassword());
+		return new ResponseEntity<Employee>(e, HttpStatus.OK);
+	}
+	
 	
 
 	@PostMapping("/")

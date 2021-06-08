@@ -13,4 +13,6 @@ public interface IEmployeeService {
 	public Employee updateEmployee(Employee employee);
 	
 	public boolean deleteById(int id);
+	
+	public Employee verifyUser(String username, String password);
 }

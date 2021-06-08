@@ -48,6 +48,13 @@ public class EmployeeServiceImpl implements IEmployeeService{
 		return employee;
 	}
 
+	@Override
+	public Employee verifyUser(String username, String password) {
+		
+		Employee emp = employeeRepository.findByUserNameAndPassword(username, password);
+		return emp;
+	}
+
 	
 
 }
